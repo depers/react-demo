@@ -17,7 +17,7 @@ export default defineConfig([
     rules: {
       'react/react-in-jsx-scope': 'off',
       'react/jsx-no-target-blank': 'off',
-      'no-console': 'error',// 禁止使用console
+      // 'no-console': 'error',// 禁止使用console
       'no-unused-vars': 'error',// 禁止使用未定义的变量
       'no-debugger': 'error', // 禁止使用debugger
       'no-var': 'error', // 要求使用let或是const，而不是var
