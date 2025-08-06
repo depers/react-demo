@@ -21,6 +21,7 @@ export default defineConfig([
       'no-unused-vars': 'error',// 禁止使用未定义的变量
       'no-debugger': 'error', // 禁止使用debugger
       'no-var': 'error', // 要求使用let或是const，而不是var
+      "@typescript-eslint/no-explicit-any": "off", // 允许在代码中显式使用 any 类型
     }
   }
 ]);

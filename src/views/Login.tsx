@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 export default function Login() {
   useEffect(() => {
     request
-      .get('/users', {
+      .post('/users/login', {
         id: 12345
       })
       .catch(error => {
