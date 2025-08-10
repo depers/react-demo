@@ -1,7 +1,6 @@
 import { message } from 'antd'
 import axios, { AxiosError } from 'axios'
 import { hideLoading, showLoading } from './loading'
-import { error } from 'console'
 
 const instance = axios.create({
   baseURL: '/api',

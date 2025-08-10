@@ -1,5 +1,10 @@
 import { Spin } from 'antd'
+import './loading.less'
 
 export default function Loading({ tip = 'loading' }: { tip?: string }) {
-  return <Spin tip={tip} size='large' className='request-loading' />
+  return (
+    <Spin tip={tip} size='large' className='request-loading'>
+      <p>Login</p>
+    </Spin>
+  )
 }
