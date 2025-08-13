@@ -1,11 +1,13 @@
 import { message } from 'antd'
 import axios, { AxiosError } from 'axios'
 import { hideLoading, showLoading } from './loading'
+import env from '@/config'
 
-console.log(import.meta.env)
+console.log('编译时环境', import.meta.env)
+console.log('运行时环境', env)
 
 const instance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_API,
+  baseURL: env.baseApi,
   timeout: 8000,
   timeoutErrorMessage: '请求超时，请稍后再试',
   withCredentials: true
@@ -19,10 +21,10 @@ instance.interceptors.request.use(
     if (token) {
       config.headers.Authorization = 'Token::' + token
     }
-    if (import.meta.env.VITE_MOCK === 'true') {
-      config.baseURL = import.meta.env.VITE_MOCK_API
+    if (env.mock) {
+      config.baseURL = env.mockApi
     } else {
-      config.baseURL = import.meta.env.VITE_BASE_API
+      config.baseURL = env.mockApi
     }
     return {
       ...config // 浅拷贝创建一个新的对象
