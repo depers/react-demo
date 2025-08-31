@@ -4,10 +4,12 @@ export function makeServer({ environment = 'dev' } = {}) {
   return createServer({
     environment,
 
+    // 定义数据模型
     models: {
       user: Model
     },
 
+    // 添加种子数据（可选）
     seeds(server) {
       server.create('user', {
         id: '1',
@@ -16,6 +18,7 @@ export function makeServer({ environment = 'dev' } = {}) {
       })
     },
 
+    // 定义路由
     routes() {
       this.namespace = 'api'
 
@@ -26,7 +29,7 @@ export function makeServer({ environment = 'dev' } = {}) {
 
       // 用户登录
       this.post('/users/login', () => ({
-        code: 0,
+        code: 500001,
         msg: '请求成功',
         data: 'token123'
       }))

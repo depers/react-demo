@@ -1,7 +1,8 @@
-import { RouterProvider } from "react-router-dom";
-import router from "./router";
-import "./App.css";
-import { ConfigProvider } from "antd";
+import { RouterProvider } from 'react-router-dom'
+import router from './router'
+import './App.css'
+import { ConfigProvider, App as AntdApp } from 'antd'
+import AntdGlobal from './utils/AntdGlobal'
 
 function App() {
   return (
@@ -9,13 +10,16 @@ function App() {
       theme={{
         token: {
           // Seed Token，影响范围大
-          colorPrimary: "#ed6c00"
-        },
+          colorPrimary: '#ed6c00'
+        }
       }}
     >
-      <RouterProvider router={router} />
+      <AntdApp>
+        <AntdGlobal />
+        <RouterProvider router={router} />
+      </AntdApp>
     </ConfigProvider>
-  );
+  )
 }
 
-export default App;
+export default App
