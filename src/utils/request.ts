@@ -58,11 +58,16 @@ instance.interceptors.response.use(
   }
 )
 
+interface IConfig {
+  showLoading?: boolean
+  showError?: boolean
+}
+
 export default {
-  get<T>(url: string, params?: object): Promise<T> {
-    return instance.get(url, { params })
+  get<T>(url: string, params?: object, options: IConfig = { showLoading: true, showError: true }): Promise<T> {
+    return instance.get(url, { params, ...options })
   },
-  post<T>(url: string, params?: object): Promise<T> {
-    return instance.post(url, { params })
+  post<T>(url: string, params?: object, options: IConfig = { showLoading: true, showError: true }): Promise<T> {
+    return instance.post(url, params, options)
   }
 }
