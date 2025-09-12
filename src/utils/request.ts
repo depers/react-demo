@@ -16,7 +16,7 @@ const instance = axios.create({
 // 请求拦截器
 instance.interceptors.request.use(
   config => {
-    showLoading()
+    if (config.showLoading) showLoading()
     const token = localStorage.getItem('token')
     if (token) {
       config.headers.Authorization = 'Token::' + token
@@ -46,8 +46,12 @@ instance.interceptors.response.use(
       return Promise.reject(data)
       // location.href = '/login'
     } else if (data.code != 0) {
-      message.error(data.msg)
-      return Promise.reject(data)
+      if (response.config.showError === false) {
+        return Promise.resolve(data)
+      } else {
+        message.error(data.msg)
+        return Promise.reject(data)
+      }
     }
     return data.data
   },
