@@ -13,9 +13,19 @@ const instance = axios.create({
   withCredentials: true
 })
 
+function showMessage(message: string): void {
+  console.log(message)
+}
+
 // 请求拦截器
 instance.interceptors.request.use(
   config => {
+    // 使用
+    console.log(APP_VERSION) // TypeScript 知道这个变量存在
+
+    // 使用
+    showMessage('Hello, TypeScript!')
+
     if (config.showLoading) showLoading()
     const token = localStorage.getItem('token')
     if (token) {
