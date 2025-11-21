@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react'
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons'
-import { Layout, Menu, theme, Watermark } from 'antd'
+import { Layout, theme, Watermark } from 'antd'
 import NavHeader from '@/components/NavHeader'
 import NavFooter from '@/components/NavFooter'
+import Menu from '@/components/Menu'
 
 const { Header, Content, Footer, Sider } = Layout
-
-const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map((icon, index) => ({
-  key: String(index + 1),
-  icon: React.createElement(icon),
-  label: `nav ${index + 1}`
-}))
 
 const App: React.FC = () => {
   const {
@@ -56,7 +51,7 @@ const App: React.FC = () => {
           }}
         >
           <div className='demo-logo-vertical' />
-          <Menu theme='dark' mode='inline' defaultSelectedKeys={['4']} items={items} />
+          <Menu />
         </Sider>
         <Layout>
           <NavHeader />
