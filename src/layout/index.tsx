@@ -6,7 +6,7 @@ import Menu from '@/components/Menu'
 import { Outlet } from 'react-router-dom'
 import styles from './index.module.less'
 import api from '@/api'
-import storage from '@/utils/storage'
+import store from '@/store'
 
 const { Content, Sider } = Layout
 
@@ -17,8 +17,7 @@ const App: React.FC = () => {
 
   const getUserInfo = async () => {
     const data = await api.getUserInfo()
-    storage.set('userInfo', data)
-    console.log('data', data.userName)
+    store.updateUserInfo(data)
   }
 
   return (
