@@ -6,18 +6,19 @@ import Menu from '@/components/Menu'
 import { Outlet } from 'react-router-dom'
 import styles from './index.module.less'
 import api from '@/api'
-import store from '@/store'
+import { useUserInfoStore } from '@/store'
 
 const { Content, Sider } = Layout
 
 const App: React.FC = () => {
+  const state = useUserInfoStore()
   useEffect(() => {
     getUserInfo()
   }, [])
 
   const getUserInfo = async () => {
     const data = await api.getUserInfo()
-    store.updateUserInfo(data)
+    state.updateUserInfo(data)
   }
 
   return (

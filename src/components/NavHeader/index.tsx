@@ -1,10 +1,12 @@
 import { Breadcrumb, Switch, Dropdown, type MenuProps } from 'antd'
 import style from './index.module.less'
 import { MenuFoldOutlined } from '@ant-design/icons'
-import store from '@/store'
+import { useUserInfoStore } from '@/store'
 import storage from '@/utils/storage'
 
 const NavHeader = () => {
+  const userName = useUserInfoStore(state => state.userInfo.userName)
+  const userEmail = useUserInfoStore(state => state.userInfo.userEmail)
   const breadList = [
     {
       title: '首页'
@@ -17,7 +19,7 @@ const NavHeader = () => {
   const items: MenuProps['items'] = [
     {
       key: 'email',
-      label: '邮箱：' + store.userInfo.userEmail
+      label: '邮箱：' + userEmail
     },
     {
       key: 'logout',
@@ -41,7 +43,7 @@ const NavHeader = () => {
       <div className={style.right}>
         <Switch checkedChildren='暗黑' unCheckedChildren='默认' style={{ marginRight: 10 }} />
         <Dropdown menu={{ items, onClick }} trigger={['click']}>
-          <span className={style.nickName}>{store.userInfo.userName}</span>
+          <span className={style.nickName}>{userName}</span>
         </Dropdown>
       </div>
     </div>
