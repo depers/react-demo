@@ -1,12 +1,12 @@
 import { Breadcrumb, Switch, Dropdown, type MenuProps } from 'antd'
 import style from './index.module.less'
-import { MenuFoldOutlined } from '@ant-design/icons'
-import { useUserInfoStore } from '@/store'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { useStore } from '@/store'
 import storage from '@/utils/storage'
 
 const NavHeader = () => {
-  const userName = useUserInfoStore(state => state.userInfo.userName)
-  const userEmail = useUserInfoStore(state => state.userInfo.userEmail)
+  const { userInfo, collapsed, updateCollapsed } = useStore()
+
   const breadList = [
     {
       title: '首页'
@@ -19,7 +19,7 @@ const NavHeader = () => {
   const items: MenuProps['items'] = [
     {
       key: 'email',
-      label: '邮箱：' + userEmail
+      label: '邮箱：' + userInfo.userEmail
     },
     {
       key: 'logout',
@@ -34,16 +34,21 @@ const NavHeader = () => {
     }
   }
 
+  const toggleCollapsed = () => {
+    updateCollapsed()
+  }
+
   return (
     <div className={style.navHeader}>
       <div className={style.left}>
-        <MenuFoldOutlined />
+        <div onClick={toggleCollapsed}>{collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}</div>
+
         <Breadcrumb items={breadList} style={{ marginLeft: 10 }} />
       </div>
       <div className={style.right}>
         <Switch checkedChildren='暗黑' unCheckedChildren='默认' style={{ marginRight: 10 }} />
         <Dropdown menu={{ items, onClick }} trigger={['click']}>
-          <span className={style.nickName}>{userName}</span>
+          <span className={style.nickName}>{userInfo.userName}</span>
         </Dropdown>
       </div>
     </div>

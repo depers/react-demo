@@ -1,8 +1,11 @@
 import { Menu } from 'antd'
 import styles from './index.module.less'
 import { DesktopOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons'
+import { useStore } from '@/store'
 
 const SideMenu = () => {
+  const collapsed = useStore(state => state.collapsed)
+
   const items = [
     {
       label: '工作台',
@@ -26,9 +29,17 @@ const SideMenu = () => {
     <div>
       <div className={styles.logo}>
         <img src='/imgs/logo.png' className={styles.img} />
-        <span>慕慕货运</span>
+        {collapsed ? '' : <span>慕慕货运</span>}
       </div>
-      <Menu defaultSelectedKeys={['1']} mode='inline' theme='dark' items={items} />
+      <Menu
+        defaultSelectedKeys={['1']}
+        mode='inline'
+        theme='dark'
+        style={{
+          width: collapsed ? 80 : 'auto'
+        }}
+        items={items}
+      />
     </div>
   )
 }

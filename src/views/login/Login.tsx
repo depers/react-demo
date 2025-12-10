@@ -3,11 +3,11 @@ import styles from './index.module.less'
 import type { Login } from '@/types/api'
 import api from '@/api'
 import { useState } from 'react'
-import { useUserInfoStore } from '@/store'
+import { useStore } from '@/store'
 
 export default function LoginFC() {
   const [loading, setLoading] = useState(false)
-  const updateToken = useUserInfoStore(state => state.updateToken)
+  const updateToken = useStore(state => state.updateToken)
   const onFinish = async (values: Login.params) => {
     try {
       setLoading(true)
