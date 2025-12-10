@@ -1,18 +1,5 @@
 import type { User } from '@/types/api'
-import resso from 'resso'
 import { create } from 'zustand'
-
-// 使用resso进行状态管理
-const store = resso({
-  token: '',
-  userInfo: {
-    userEmail: '',
-    userName: ''
-  },
-  updateUserInfo(userInfo: User.UserItem) {
-    store.userInfo = userInfo
-  }
-})
 
 // 使用zustand进行状态管理
 export const useUserInfoStore = create<{
@@ -23,13 +10,14 @@ export const useUserInfoStore = create<{
   }
   // eslint-disable-next-line no-unused-vars
   updateUserInfo: (userInfo: User.UserItem) => void
+  // eslint-disable-next-line no-unused-vars
+  updateToken: (token: string) => void
 }>(set => ({
   token: '',
   userInfo: {
     userEmail: '',
     userName: ''
   },
-  updateUserInfo: (userInfo: User.UserItem) => set({ userInfo })
+  updateUserInfo: (userInfo: User.UserItem) => set({ userInfo }),
+  updateToken: token => set({ token })
 }))
-
-export default store

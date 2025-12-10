@@ -2980,13 +2980,6 @@ resolve@^2.0.0-next.5:
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 
-resso@^0.24.0:
-  version "0.24.0"
-  resolved "https://registry.npmmirror.com/resso/-/resso-0.24.0.tgz#e4313b8e8126dd27946f148dce3953084db2ea9e"
-  integrity sha512-kTsI8NkMYE7nBXlSRtPcR23LYXNDa+W2txK2/y7Xn4fIRMk0wRmlcx4VJkiciEkRyobRbaqJzFlQWuXaEU1R4Q==
-  dependencies:
-    use-sync-external-store "^1.6.0"
-
 reusify@^1.0.4:
   version "1.1.0"
   resolved "https://registry.npmmirror.com/reusify/-/reusify-1.1.0.tgz"
@@ -3423,11 +3416,6 @@ uri-js@^4.2.2:
   integrity sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   dependencies:
     punycode "^2.1.0"
-
-use-sync-external-store@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.npmmirror.com/use-sync-external-store/-/use-sync-external-store-1.6.0.tgz#b174bfa65cb2b526732d9f2ac0a408027876f32d"
-  integrity sha512-Pp6GSwGP/NrPIrxVFAIkOQeyw8lFenOHijQWkUTrDvrF4ALqylP2C/KCkeS9dpUM3KvYRQhna5vt7IL95+ZQ9w==
 
 vite@^6.3.5:
   version "6.3.5"
