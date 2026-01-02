@@ -11,6 +11,11 @@ export default function DashBoard() {
       tooltip: {
         trigger: 'axis'
       },
+      legend: {
+        data: ['订单', '流水'],
+        top: 'top', // 或者设置为 top: 0, top: '5%'
+        left: 'center' // 确保图例在水平方向上居中
+      },
       grid: {
         left: '3%',
         right: '4%',
@@ -34,6 +39,100 @@ export default function DashBoard() {
           name: '流水',
           data: [250, 330, 324, 318, 235, 247, 360, 250, 330, 324, 318, 235],
           type: 'line'
+        }
+      ]
+    })
+
+    const pieChartCityDom = document.getElementById('pieChartCity')
+    const pieChartCityInstance = echarts.init(pieChartCityDom as HTMLElement)
+    pieChartCityInstance.setOption({
+      title: {
+        text: '司机城市分布图',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left'
+      },
+      series: [
+        {
+          name: '城市分布',
+          type: 'pie',
+          radius: '50%',
+          data: [
+            { value: 1048, name: '北京' },
+            { value: 735, name: '上海' },
+            { value: 580, name: '广州' },
+            { value: 484, name: '武汉' },
+            { value: 300, name: '杭州' }
+          ]
+        }
+      ]
+    })
+
+    const pieChartAgeDom = document.getElementById('pieChartAge')
+    const pieChartAgeInstance = echarts.init(pieChartAgeDom as HTMLElement)
+    pieChartAgeInstance.setOption({
+      title: {
+        text: '司机年龄分布图',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        left: 'left'
+      },
+      series: [
+        {
+          name: '年龄分布',
+          type: 'pie',
+          radius: [30, 150],
+          roseType: 'area',
+          data: [
+            { value: 1048, name: '北京' },
+            { value: 735, name: '上海' },
+            { value: 580, name: '广州' },
+            { value: 484, name: '武汉' },
+            { value: 300, name: '杭州' }
+          ]
+        }
+      ]
+    })
+
+    const radarChartDom = document.getElementById('radarChart')
+    const radarChartInstance = echarts.init(radarChartDom as HTMLElement)
+    radarChartInstance.setOption({
+      title: {
+        text: '司机模型诊断'
+      },
+      legend: {
+        data: ['司机模型诊断']
+      },
+      radar: {
+        // shape: 'circle',
+        indicator: [
+          { name: '服务态度'},
+          { name: '在线时长'},
+          { name: '接单率' },
+          { name: '评分'},
+          { name: '关注度'}
+        ]
+      },
+      series: [
+        {
+          name: '模型诊断',
+          type: 'radar',
+          data: [
+            {
+              value: [4200, 3000, 20000, 35000, 40000],
+              name: '司机模型诊断'
+            }
+          ]
         }
       ]
     })
@@ -85,8 +184,10 @@ export default function DashBoard() {
       </div>
       <div className={styles.chart}>
         <Card title='司机分布' extra={<Button type='primary'>刷新</Button>}>
-          <div id='pieChartCity' className={styles.itemPie}></div>
-          <div id='pieChartAge' className={styles.itemPie}></div>
+          <div className={styles.pieChart}>
+            <div id='pieChartCity' className={styles.itemPie}></div>
+            <div id='pieChartAge' className={styles.itemPie}></div>
+          </div>
         </Card>
       </div>
       <div className={styles.chart}>
