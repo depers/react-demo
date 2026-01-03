@@ -3,13 +3,15 @@
  */
 
 // 格式化金额
-export const formatMoney = (num: number | string) => {
+export const formatMoney = (num?: number | string) => {
+  if(!num) return '0.00'
   const a = parseFloat(num.toString())
   return a.toLocaleString('zh-CN', { style: 'currency', currency: 'CNY' })
 }
 
 // 格式化数字
-export const formatNum = (num: number | string) => {
+export const formatNum = (num?: number | string) => {
+  if(!num) return '0'
   const a = num.toString()
   if (a.indexOf('.') > -1) return a.replace(/{\d}(?=(\d{3})+\.)/g, '$1,')
   return a.replace(/(\d)(?=(\d{3})+$)/g, '$1,')
@@ -48,4 +50,12 @@ export const formatDate = (date?: Date, rule?: string) => {
     // fmt = fmt.replace(new RegExp(`($k)`), O[k] > 9 ? O[k].toString() : '0' + O[k].toString())
     fmt = fmt.replace(new RegExp(`(${k})`), ('00' + val).substring(val.length))
   }
+  return fmt
+}
+
+// 用户状态转换
+export const formatState = (state: number) => {
+  if(state === 1) return '在职'
+  if(state === 2) return '试用期'
+  if(state === 3) return '离职'
 }

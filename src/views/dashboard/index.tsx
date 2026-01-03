@@ -1,9 +1,17 @@
 import { Button, Card, Descriptions } from 'antd'
 import * as echarts from 'echarts'
 import styles from './index.module.less'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useStore } from '@/store'
+import { formatMoney, formatNum, formatState } from '@/utils'
+import api from '@/api'
+import type { Dashboard } from '@/types/api'
 
 export default function DashBoard() {
+  const userInfo = useStore(state => state.userInfo)
+
+  const [reportData, setReportData] = useState<Dashboard.ReportData>()
+
   useEffect(() => {
     const lineChartDom = document.getElementById('lineChart')
     const chartInstance = echarts.init(lineChartDom as HTMLElement)
@@ -116,11 +124,11 @@ export default function DashBoard() {
       radar: {
         // shape: 'circle',
         indicator: [
-          { name: '服务态度'},
-          { name: '在线时长'},
+          { name: '服务态度' },
+          { name: '在线时长' },
           { name: '接单率' },
-          { name: '评分'},
-          { name: '关注度'}
+          { name: '评分' },
+          { name: '关注度' }
         ]
       },
       series: [
@@ -137,15 +145,16 @@ export default function DashBoard() {
       ]
     })
   }, [])
-  const userInfo = {
-    userImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    userId: 'depers',
-    userEmail: 'dev_fengxiao@163.com',
-    state: '在职',
-    mobile: '13200001111',
-    job: '前端工程师',
-    deptName: '大前端'
+
+  useEffect(() => {
+    getReportData()
+  }, [])
+
+  const getReportData = async () => {
+    const data = await api.getReportData()
+    setReportData(data)
   }
+
   return (
     <div className={styles.dashboard}>
       <div className={styles.userInfo}>
@@ -153,7 +162,7 @@ export default function DashBoard() {
         <Descriptions title='欢迎新同学，每天都要开心！'>
           <Descriptions.Item label='用户ID'>{userInfo.userId}</Descriptions.Item>
           <Descriptions.Item label='邮箱'>{userInfo.userEmail}</Descriptions.Item>
-          <Descriptions.Item label='状态'>{userInfo.state}</Descriptions.Item>
+          <Descriptions.Item label='状态'>{formatState(userInfo.state)}</Descriptions.Item>
           <Descriptions.Item label='手机号'>{userInfo.mobile}</Descriptions.Item>
           <Descriptions.Item label='岗位'>{userInfo.job}</Descriptions.Item>
           <Descriptions.Item label='部门'>{userInfo.deptName}</Descriptions.Item>
@@ -162,19 +171,19 @@ export default function DashBoard() {
       <div className={styles.report}>
         <div className={styles.card}>
           <div className='title'>司机数量</div>
-          <div className={styles.data}>1000个</div>
+          <div className={styles.data}>{formatNum(reportData?.driverCount)}个</div>
         </div>
         <div className={styles.card}>
           <div className='title'>总流水</div>
-          <div className={styles.data}>1000元</div>
+          <div className={styles.data}>{formatMoney(reportData?.totalMoney)}元</div>
         </div>
         <div className={styles.card}>
           <div className='title'>总订单</div>
-          <div className={styles.data}>1000单</div>
+          <div className={styles.data}>{formatNum(reportData?.orderCount)}单</div>
         </div>
         <div className={styles.card}>
           <div className='title'>开通城市</div>
-          <div className={styles.data}>1000座</div>
+          <div className={styles.data}>{formatNum(reportData?.cityCount)}座</div>
         </div>
       </div>
       <div className={styles.chart}>

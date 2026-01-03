@@ -1,31 +1,12 @@
-import { createServer, Model } from 'miragejs'
+import { createServer } from 'miragejs'
 
 export function makeServer({ environment = 'dev' } = {}) {
   return createServer({
     environment,
 
-    // 定义数据模型
-    models: {
-      user: Model
-    },
-
-    // 添加种子数据（可选）
-    seeds(server) {
-      server.create('user', {
-        id: '1',
-        name: 'John Doe',
-        email: 'john@example.com'
-      })
-    },
-
     // 定义路由
     routes() {
       this.namespace = 'api'
-
-      // 用户相关路由
-      this.get('/users', schema => {
-        return schema.users.all()
-      })
 
       // 用户登录
       this.post('/users/login', () => ({
@@ -46,11 +27,24 @@ export function makeServer({ environment = 'dev' } = {}) {
           deptId: '123',
           state: 1,
           mobile: '12909010202',
+          job: '前端工程师',
           role: 1,
           roleList: '1',
           createId: 0,
           deptName: '测试',
-          userImg: 'http://1223'
+          userImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+        }
+      }))
+
+      // 获取看板报告信息
+      this.get('/order/dashboard/getReportData', () => ({
+        code: 0,
+        msg: '请求成功',
+        data: {
+          driverCount: 1000,
+          totalMoney: 23487392.29,
+          orderCount: 58329301,
+          cityCount: 34
         }
       }))
 

@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import type { Login, User } from '@/types/api'
+import type { Dashboard, Login, User } from '@/types/api'
 
 export default {
   // 登录
@@ -10,5 +10,10 @@ export default {
   // 获取用户信息
   getUserInfo() {
     return request.get<User.UserItem>('/users/getUserInfo')
+  },
+
+  // 获取工作台汇总数据
+  getReportData() {
+    return request.get<Dashboard.ReportData>('/order/dashboard/getReportData')
   }
 }
