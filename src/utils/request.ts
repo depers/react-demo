@@ -44,7 +44,7 @@ instance.interceptors.response.use(
       message.error(data.msg)
       localStorage.removeItem('token')
       return Promise.reject(data)
-      // location.href = '/login'
+      location.href = '/login?callback=' + encodeURIComponent(location.href)
     } else if (data.code != 0) {
       if (response.config.showError === false) {
         return Promise.resolve(data)
