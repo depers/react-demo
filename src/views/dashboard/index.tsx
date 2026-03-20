@@ -18,6 +18,15 @@ export default function DashBoard() {
   const [radarRef, racarChart] = useCharts()
 
   useEffect(() => {
+    renderLineChart()
+    renderPieChart()
+    renderpieChartAge()
+    renderRadarChart()
+  }, [lineChart, pieChartCity, pieChartAge, racarChart])
+
+  const renderLineChart = async () => {
+    if (!lineChart) return
+    const data = await api.getLineData()
     lineChart?.setOption({
       tooltip: {
         trigger: 'axis'
@@ -35,7 +44,7 @@ export default function DashBoard() {
       },
       xAxis: {
         type: 'category',
-        data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+        data: data.label
       },
       yAxis: {
         type: 'value'
@@ -43,17 +52,21 @@ export default function DashBoard() {
       series: [
         {
           name: '订单',
-          data: [150, 230, 224, 218, 135, 147, 260, 150, 230, 224, 218, 135],
+          data: data.order,
           type: 'line'
         },
         {
           name: '流水',
-          data: [250, 330, 324, 318, 235, 247, 360, 250, 330, 324, 318, 235],
+          data: data.money,
           type: 'line'
         }
       ]
     })
+  }
 
+  const renderPieChart = async () => {
+    if (!pieChartCity) return
+    const data = await api.getPieCityData()
     pieChartCity?.setOption({
       title: {
         text: '司机城市分布图',
@@ -71,20 +84,19 @@ export default function DashBoard() {
           name: '城市分布',
           type: 'pie',
           radius: '50%',
-          data: [
-            { value: 1048, name: '北京' },
-            { value: 735, name: '上海' },
-            { value: 580, name: '广州' },
-            { value: 484, name: '武汉' },
-            { value: 300, name: '杭州' }
-          ]
+          data
         }
       ]
     })
+  }
 
+  // 加载饼图2
+  const renderpieChartAge = async () => {
+    if (!pieChartAge) return
+    const data = await api.getPieAgeData()
     pieChartAge?.setOption({
       title: {
-        text: '司机年龄分布图',
+        text: '司机年龄分布',
         left: 'center'
       },
       tooltip: {
@@ -98,19 +110,18 @@ export default function DashBoard() {
         {
           name: '年龄分布',
           type: 'pie',
-          radius: [30, 150],
+          radius: [50, 180],
           roseType: 'area',
-          data: [
-            { value: 1048, name: '北京' },
-            { value: 735, name: '上海' },
-            { value: 580, name: '广州' },
-            { value: 484, name: '武汉' },
-            { value: 300, name: '杭州' }
-          ]
+          data
         }
       ]
     })
+  }
 
+  // 加载雷达图
+  const renderRadarChart = async () => {
+    if (!racarChart) return
+    const data = await api.getRadarData()
     racarChart?.setOption({
       title: {
         text: '司机模型诊断'
@@ -119,29 +130,17 @@ export default function DashBoard() {
         data: ['司机模型诊断']
       },
       radar: {
-        // shape: 'circle',
-        indicator: [
-          { name: '服务态度' },
-          { name: '在线时长' },
-          { name: '接单率' },
-          { name: '评分' },
-          { name: '关注度' }
-        ]
+        indicator: data.indicator
       },
       series: [
         {
           name: '模型诊断',
           type: 'radar',
-          data: [
-            {
-              value: [4200, 3000, 20000, 35000, 40000],
-              name: '司机模型诊断'
-            }
-          ]
+          data: data.data
         }
       ]
     })
-  }, [lineChart, pieChartCity, pieChartAge, racarChart])
+  }
 
   useEffect(() => {
     getReportData()
