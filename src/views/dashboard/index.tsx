@@ -142,6 +142,12 @@ export default function DashBoard() {
     })
   }
 
+  // 刷新饼图
+  const handleRefresh = () => {
+    renderPieChart()
+    renderpieChartAge()
+  }
+
   useEffect(() => {
     getReportData()
   }, [])
@@ -179,16 +185,30 @@ export default function DashBoard() {
         </div>
         <div className={styles.card}>
           <div className='title'>开通城市</div>
-          <div className={styles.data}>{formatNum(reportData?.cityCount)}座</div>
+          <div className={styles.data}>{formatNum(reportData?.cityNum)}座</div>
         </div>
       </div>
       <div className={styles.chart}>
-        <Card title='订单和流水走势图' extra={<Button type='primary'>刷新</Button>}>
+        <Card
+          title='订单和流水走势图'
+          extra={
+            <Button type='primary' onClick={renderLineChart}>
+              刷新
+            </Button>
+          }
+        >
           <div ref={lineRef} className={styles.itemChart}></div>
         </Card>
       </div>
       <div className={styles.chart}>
-        <Card title='司机分布' extra={<Button type='primary'>刷新</Button>}>
+        <Card
+          title='司机分布'
+          extra={
+            <Button type='primary' onClick={handleRefresh}>
+              刷新
+            </Button>
+          }
+        >
           <div className={styles.pieChart}>
             <div ref={pieChartRef1} className={styles.itemPie}></div>
             <div ref={pieChartRef2} className={styles.itemPie}></div>
@@ -196,7 +216,14 @@ export default function DashBoard() {
         </Card>
       </div>
       <div className={styles.chart}>
-        <Card title='模型诊断' extra={<Button type='primary'>刷新</Button>}>
+        <Card
+          title='模型诊断'
+          extra={
+            <Button type='primary' onClick={renderRadarChart}>
+              刷新
+            </Button>
+          }
+        >
           <div ref={radarRef} className={styles.itemChart}></div>
         </Card>
       </div>
