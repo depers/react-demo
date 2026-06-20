@@ -1,5 +1,6 @@
 import request from '@/utils/request'
-import type { Dashboard, Login, User } from '@/types/api'
+import type { Dashboard, Login, ResultData, User } from '@/types/api'
+import type { UserInfo } from 'os'
 
 export default {
   // 登录
@@ -32,4 +33,8 @@ export default {
   getRadarData() {
     return request.get<Dashboard.RadarData>('/order/dashboard/getRadarData')
   },
+  // 获取用户列表数据
+  getUserList() {
+    return request.get<ResultData<User.UserItem>>('/users/list')
+  }
 }

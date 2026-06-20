@@ -106,6 +106,31 @@ export function makeServer({ environment = 'dev' } = {}) {
         }
       }))
 
+      this.get('/users/list', () => ({
+        code: 0,
+        msg: '请求成功',
+        data: {
+          list: [
+            {
+              _id: '123',
+              userId: 1,
+              userName: '冯晓',
+              userEmail: 'dev_fengxiao@163.com',
+              deptId: '123',
+              state: 1,
+              mobile: '12909010202',
+              job: '前端工程师',
+              role: 1,
+              roleList: '1',
+              createId: 0,
+              deptName: '测试',
+              userImg: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+              createTime: '2026-06-20 13:01:01'
+            }
+          ]
+        }
+      }))
+
       // 允许所有未定义的路由通过（在开发中很有用）
       this.passthrough()
     }

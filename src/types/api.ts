@@ -6,6 +6,15 @@ export interface Result<T = any> {
   msg: string
 }
 
+export interface ResultData<T = any> {
+  list: T[]
+  page: {
+    pageNum: number
+    pageSize: number
+    total: number
+  }
+}
+
 export namespace Login {
   export interface params {
     userName: string
@@ -14,6 +23,11 @@ export namespace Login {
 }
 
 export namespace User {
+  export interface Params {
+    userId?: number
+    userName?: string
+    state?: number
+  }
   export interface UserItem {
     _id: string
     userId: number
@@ -28,10 +42,11 @@ export namespace User {
     createId: number
     deptName: string
     userImg: string
+    createTime: string
   }
 }
 
-export namespace Dashboard{
+export namespace Dashboard {
   export interface ReportData {
     driverCount: number
     totalMoney: number

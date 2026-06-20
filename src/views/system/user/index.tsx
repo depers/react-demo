@@ -1,27 +1,21 @@
+import api from '@/api'
 import type { User } from '@/types/api'
+import { formatDate } from '@/utils'
 import { Form, Input, Button, Table, Select, Space } from 'antd'
 import type { ColumnType } from 'antd/es/table'
+import { useEffect, useState } from 'react'
 
-export default function User() {
-  const dataSource = [
-    {
-      _id: '',
-      userId: 0,
-      userName: '',
-      userEmail: '',
-      deptId: '',
-      state: 0,
-      mobile: '',
-      job: '',
-      role: 0,
-      roleList: '',
-      createId: 0,
-      deptName: '',
-      userImg: ''
-    }
-  ]
+export default function UserList() {
+  const [data, setData] = useState<User.UserItem[]>([])
+  useEffect(() => {
+    getUserList()
+  }, [])
+  const getUserList = async () => {
+    const data = await api.getUserList()
+    setData(data.list)
+  }
 
-  const columns: ColumnType<User.UserItem> = [
+  const columns: ColumnType<User.UserItem>[] = [
     {
       title: '用户ID',
       dataIndex: 'userId',
@@ -40,20 +34,39 @@ export default function User() {
     {
       title: '用户角色',
       dataIndex: 'role',
-      key: 'role'
+      key: 'role',
+      render(role: number) {
+        return {
+          0: '超级管理员',
+          1: '管理员',
+          2: '体验管理员',
+          3: '普通用户'
+        }[role]
+      }
     },
     {
       title: '用户状态',
       dataIndex: 'state',
-      key: 'state'
+      key: 'state',
+      render(state: number) {
+        return {
+          1: '在职',
+          2: '离职',
+          3: '试用期'
+        }[state]
+      }
     },
     {
       title: '注册时间',
       dataIndex: 'createTime',
-      key: 'createTime'
+      key: 'createTime',
+      render(createTime: string) {
+        return formatDate(createTime)
+      }
     },
     {
       title: '操作',
+      key: 'operation',
       render() {
         return (
           <Space>
@@ -100,7 +113,7 @@ export default function User() {
             </Button>
           </div>
         </div>
-        <Table dataSource={dataSource} columns={columns} />
+        <Table bordered rowSelection={{ type: 'checkbox' }} dataSource={data} columns={columns} />
       </div>
     </div>
   )
